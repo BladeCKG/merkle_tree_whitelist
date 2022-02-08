@@ -1,0 +1,23 @@
+{
+  "name": "merkle_tree_whitelist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "merkletree.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurkaransahni99/merkle_tree_whitelist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gurkaransahni99/merkle_tree_whitelist/issues"
+  },
+  "homepage": "https://github.com/gurkaransahni99/merkle_tree_whitelist#readme",
+  "dependencies": {
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.2.27"
+  }
+}

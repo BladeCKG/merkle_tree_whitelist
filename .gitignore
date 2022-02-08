@@ -1,0 +1,12 @@
+**node_modules**
+config
+build
+chaindb
+artifacts/
+cache/
+coverage/
+.vscode/
+credentials.js
+contractV2/
+**.DS_Store**
+credentials.json
