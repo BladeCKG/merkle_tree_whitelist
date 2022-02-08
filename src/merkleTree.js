@@ -4,7 +4,7 @@ const keccak256 = require('keccak256');
 let whitelistedAddresses = [
     "0x096DABeFE2DE1DeAF8E40368918d7B171aAf911c",
     "0x51Bb0896bFBa11e2277323A5f3a6f54C506bFFF9",
-    "0x15708eba3e516E8294678806f28333427E2d9B19",
+    "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
     "0x4d1a3EDEFD6F14b5dbdF3F7da21b9536e8760292",
 ]
 
