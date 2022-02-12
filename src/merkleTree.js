@@ -13,7 +13,8 @@ fs.createReadStream("/Users/gurkaransahni/Projects/merkle_tree_whitelist/data/da
     .on('end',async function() {
       //do something with whitelistedAddresses
       console.log(whitelistedAddresses);
-      await merkleTreeCalculation(whitelistedAddresses)
+      const { merkleTree, rootHash } = await merkleTreeCalculation(whitelistedAddresses)
+      await merkleTreeProofGeneration(merkleTree, "0x096DABeFE2DE1DeAF8E40368918d7B171aAf911c")
     });
 // let whitelistedAddresses = [
 //     "0x096DABeFE2DE1DeAF8E40368918d7B171aAf911c",
@@ -29,7 +30,11 @@ const merkleTreeCalculation = (whitelistedAddresses) => {
     console.log(merkleTree.toString())
     console.log(rootHash.toString('hex'))
 
-    const claimingAddress = keccak256("0x096DABeFE2DE1DeAF8E40368918d7B171aAf911c");
+    return { merkleTree, rootHash };
+}
+
+const merkleTreeProofGeneration = (merkleTree, userAddress) => {
+    const claimingAddress = keccak256(userAddress);
     const hexProof = merkleTree.getHexProof(claimingAddress);
 
     console.log({
