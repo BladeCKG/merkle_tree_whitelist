@@ -28,7 +28,7 @@ describe("Merkle tests", function () {
 	}
 
 	before(async () => {
-		MERKLE = await ethers.getContractFactory("MERK");
+		MERKLE = await ethers.getContractFactory("MRKL");
 		merkle = await MERKLE.deploy();	
 		await merkle.deployed();
 
