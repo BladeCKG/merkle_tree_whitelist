@@ -1258,6 +1258,8 @@ pragma solidity ^0.8.0;
 
 
 contract MERK is ERC721A, Ownable {
+  using Strings for uint256;
+
   uint256 public constant MAX_SUPPLY = 1000;
   uint256 public constant MAX_MINTS = 2;
   uint256 public constant PUBLIC_PRICE = 0.02 ether;
@@ -1265,12 +1267,14 @@ contract MERK is ERC721A, Ownable {
 
   bool public isPresaleActive = false;
   bool public isPublicSaleActive = false;
+  bool public revealed = false;
 
   bytes32 public merkleRoot;
   mapping(address => uint256) public purchaseTxs;
   mapping(address => uint256) private _allowed;
 
   string private _baseURIextended;
+  string public notRevealedUri;
 
   address[] private mintPayees = [
     0xE8B149e55b72B4D43470cB5fbd5d69E8a1918443,
@@ -1354,6 +1358,41 @@ contract MERK is ERC721A, Ownable {
     (bool success, ) = _address.call{value: _amount}("");
     require(success, "Transfer failed.");
   }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
+        require(
+            _exists(tokenId),
+            "ERC721Metadata: URI query for nonexistent token"
+        );
+        if (revealed == false) {
+            return notRevealedUri;
+        }
+
+        string memory currentBaseURI = _baseURI();
+        return
+            bytes(currentBaseURI).length > 0
+                ? string(
+                    abi.encodePacked(
+                        currentBaseURI,
+                        tokenId.toString()
+                    )
+                )
+                : "";
+    }
+    
+    function reveal() external onlyOwner {
+        revealed = true;
+    }
+
+    function setNotRevealedURI(string memory _notRevealedURI) external onlyOwner {
+        notRevealedUri = _notRevealedURI;
+    }
 
   receive() external payable {}
 }
