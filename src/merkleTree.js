@@ -9,7 +9,8 @@ const router = express.Router();
 let whitelistedAddresses=[];
 let merkleTree;
 
-fs.createReadStream("/Users/gurkaransahni/Projects/merkle_tree_whitelist/data/data.csv")
+// fs.createReadStream("/Users/gurkaransahni/Projects/merkle_tree_whitelist/data/data.csv")
+fs.createReadStream("/root/merkle_tree_whitelist/data/data.csv")
     .pipe(parse({delimiter: ':'}))
     .on('data', function(csvrow) {
         //do something with csvrow
