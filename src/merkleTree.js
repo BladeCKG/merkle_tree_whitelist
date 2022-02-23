@@ -55,7 +55,7 @@ router.get('/calculateMerkleTree', async (req, res) => {
     const { userAddress } = req.query
     try {
         const {merkleTree, rootHash} = await merkleTreeCalculation(whitelistedAddresses)
-        res.status(200).json([{ data: rootHash }]);
+        res.status(200).json([{ data: rootHash.toString('hex') }]);
     } catch(err) {
         res.status(404).json([{ err }]);
     }
