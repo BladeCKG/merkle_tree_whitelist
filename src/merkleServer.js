@@ -11,23 +11,34 @@ app.get('/', (req, res) => {
   });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(
-    cors({
-        origin: '*',
+app.use(cors())
+// app.use(
+//   cors({
+//       origin: [
+//           "http://localhost:3000",
+//           "https://localhost:3000",
+//       ],
+//       credentials: true,
+//       preflightContinue: false,
+//   }),
+// );
+// app.use(
+//     cors({
+//         origin: '*',
 
-        methods: [
-          'GET',
-          'POST',
-        ],
+//         methods: [
+//           'GET',
+//           'POST',
+//         ],
       
-        allowedHeaders: [
-          'Content-Type',
-        ],      
-        origin: [],
-        credentials: true,
-        preflightContinue: false,
-    }),
-);
+//         allowedHeaders: [
+//           'Content-Type',
+//         ],      
+//         origin: [],
+//         credentials: true,
+//         preflightContinue: false,
+//     }),
+// );
 
 app.set('trust proxy', 1);
 
