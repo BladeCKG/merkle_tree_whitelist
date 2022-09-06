@@ -139,7 +139,7 @@ contract NFTAToken is ERC20, Ownable {
     uint256 price = payTokenPrice(payToken);
 
     uint256 totalPayPrice = payAmount.mul(price);
-    require(totalPayPrice >= PRESALE1_MIN_PAY_PRICE, "Minimum Pay Price is 10$");
+    require(totalPayPrice >= PUBLICSALE_MIN_PAY_PRICE, string(abi.encodePacked("Minimum Pay Price of Presale2 is ", PUBLICSALE_MIN_PAY_PRICE.div(1e18),"$")));
 
     uint256 nMints = totalPayPrice.div(PUBLIC_PRICE);
     require(totalSupply().add(nMints) <= MAX_SUPPLY, "Mint exceeds total supply");
