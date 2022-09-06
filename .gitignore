@@ -10,3 +10,4 @@ credentials.js
 contractV2/
 **.DS_Store**
 credentials.json
+.env

@@ -1,8 +1,39 @@
 require("@nomiclabs/hardhat-waffle")
 require("@nomiclabs/hardhat-truffle5");
 require("@nomiclabs/hardhat-etherscan");
-const CONFIG = require("./credentials.js");
+require("dotenv").config();
 
+function getPrivateKey(networkName) {
+    if (networkName) {
+      const privateKey = process.env['PRIVATEKEY_' + networkName.toUpperCase()]
+      if (privateKey && privateKey !== '') {
+        return privateKey
+      }
+    }
+  
+    const privateKey = process.env.PRIVATEKEY
+    if (!privateKey || privateKey === '') {
+      return '0'
+    }
+  
+    return privateKey
+  }
+  
+  function getAPIKey(networkName) {
+    if (networkName) {
+      const privateKey = process.env['APIKEY_' + networkName.toUpperCase()]
+      if (privateKey && privateKey !== '') {
+        return privateKey
+      }
+    }
+  
+    const privateKey = process.env.APIKEY
+    if (!privateKey || privateKey === '') {
+      return '0'
+    }
+  
+    return privateKey
+  }
 module.exports = {
     solidity: {
         compilers: [
@@ -47,17 +78,17 @@ module.exports = {
         },
         bscTestnet: {
             url: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
-            accounts: [CONFIG.wallet.PKEY],
+            accounts: [getPrivateKey('bsctestnet')],
             gasPrice: 30000000000,
         },
         rinkeby: {
             url: "https://rinkeby.infura.io/v3/ad9cef41c9c844a7b54d10be24d416e5",
-            accounts: [CONFIG.wallet.PKEY],
+            accounts: [getPrivateKey('rinkeby')],
             // gasPrice: 30000000000,
         },
         kovan: {
             url: "https://kovan.infura.io/v3/ad9cef41c9c844a7b54d10be24d416e5",
-            accounts: [CONFIG.wallet.PKEY],
+            accounts: [getPrivateKey('kovan')],
             // gasPrice: 30000000000,
         },
     },
@@ -68,6 +99,6 @@ module.exports = {
         disambiguatePaths: false,
     },
     etherscan: {
-        apiKey: `${CONFIG.etherscan.KEY}`
+        apiKey: `${getAPIKey('ethereum')}`
     }
 };
