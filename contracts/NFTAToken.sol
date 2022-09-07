@@ -20,33 +20,23 @@ contract NFTAToken is ERC20, Ownable {
     using SafeERC20 for ERC20;
     using SafeMath for uint256;
   uint256 public constant MAX_SUPPLY = 500;
-  uint256 public constant PUBLIC_PRICE = 1 * 1e18;
-  uint256 public constant PRESALE1_PRICE = 1 * 1e18;
-  uint256 public constant PRESALE2_PRICE = 1 * 1e18;
+  uint256 public constant PUBLIC_PRICE = 0.075 * 1e18;
+  uint256 public constant PRESALE1_PRICE = 0.025 * 1e18;
+  uint256 public constant PRESALE2_PRICE = 0.05 * 1e18;
 
-  uint256 public PRESALE1_MIN_PAY_PRICE = 10 * 1e18;
-  uint256 public PRESALE2_MIN_PAY_PRICE = 100 * 1e18;
-  uint256 public PUBLICSALE_MIN_PAY_PRICE = 1000 * 1e18;
+  uint256 constant public PRESALE1_MIN_PAY_PRICE = 10 * 1e18;
+  uint256 constant public PRESALE2_MIN_PAY_PRICE = 100 * 1e18;
+  uint256 constant public PUBLICSALE_MIN_PAY_PRICE = 1000 * 1e18;
 
   bool public isPresale1Active = false;
   bool public isPresale2Active = false;
   bool public isPublicSaleActive = false;
-  bool public revealed = false;
 
   bytes32 public presale1_merkleRoot;
   bytes32 public presale2_merkleRoot;
   mapping(address => uint256) public presale1MintAmount;
   mapping(address => uint256) public presale2MintAmount;
   mapping(address => uint256) public publicMintAmount;
-  mapping(address => uint256) private _allowed;
-
-  string private _baseURIextended;
-  string public notRevealedUri;
-
-  address[] private mintPayees = [
-    0xcD1e34e04288e62988D37FD70c71B8e340d25f66,
-    0x741a8848eb80CA305D21a849eAbB1CadcA6cC812
-  ];
 
   mapping(address => address) public oraclePriceFeed;
 
@@ -114,7 +104,7 @@ contract NFTAToken is ERC20, Ownable {
     uint256 price = payTokenPrice(payToken);
 
     uint256 totalPayPrice = payAmount.mul(price);
-    require(totalPayPrice >= PRESALE1_MIN_PAY_PRICE, string(abi.encodePacked("Minimum Pay Price of Presale2 is ", PRESALE2_MIN_PAY_PRICE.div(1e18),"$")));
+    require(totalPayPrice >= PRESALE2_MIN_PAY_PRICE, string(abi.encodePacked("Minimum Pay Price of Presale2 is ", PRESALE2_MIN_PAY_PRICE.div(1e18),"$")));
 
     uint256 nMints = totalPayPrice.div(PRESALE2_PRICE);
     require(totalSupply().add(nMints) <= MAX_SUPPLY, "Mint exceeds total supply");
@@ -134,7 +124,7 @@ contract NFTAToken is ERC20, Ownable {
     allowedPayToken(payToken)
   {
     require(msg.sender == tx.origin, "Can't mint through another contract");
-    require(isPresale1Active, "Presale not active");
+    require(isPublicSaleActive, "Presale not active");
 
     uint256 price = payTokenPrice(payToken);
 
